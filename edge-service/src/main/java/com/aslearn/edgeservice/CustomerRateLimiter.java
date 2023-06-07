@@ -107,6 +107,7 @@ public class CustomerRateLimiter extends AbstractRateLimiter<CustomerRateLimiter
                 log.debug("probe is not consumed");
                 return Mono.just(new Response(false, getHeaders(routeConfig, probe.getRemainingTokens())));
             } catch (Exception e) {
+                e.printStackTrace();
                 log.error("rate limiting failed: {}", e.getCause());
             }
             return Mono.just(new Response(true, new HashMap<>()));

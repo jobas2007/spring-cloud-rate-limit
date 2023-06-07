@@ -82,13 +82,13 @@ public class CustomerRateLimitGatewayFilterFactory extends AbstractGatewayFilter
                 .parse(getOrDefault(config.emptyKeyStatus, this.emptyKeyStatusCode));
 
         return (exchange, chain) -> resolver.resolve(exchange).defaultIfEmpty(EMPTY_KEY).flatMap(key -> {
-            if (EMPTY_KEY.equals(key)) {
-                if (denyEmpty) {
-                    setResponseStatus(exchange, emptyKeyStatus);
-                    return exchange.getResponse().setComplete();
-                }
-                return chain.filter(exchange);
-            }
+//            if (EMPTY_KEY.equals(key)) {
+//                if (denyEmpty) {
+//                    setResponseStatus(exchange, emptyKeyStatus);
+//                    return exchange.getResponse().setComplete();
+//                }
+//                return chain.filter(exchange);
+//            }
             String routeId = config.getRouteId();
             if (routeId == null) {
                 Route route = exchange.getAttribute(ServerWebExchangeUtils.GATEWAY_ROUTE_ATTR);
