@@ -1,0 +1,28 @@
+server:
+  port: 9000
+
+spring:
+  application:
+    name: edge-service
+  cloud:
+    gateway:
+      routes:
+        - id: book-route
+          uri: http://localhost:9001
+          predicates:
+            - Path=/books/**
+          filters:
+            - name: CustomerRateLimit
+              args:
+                bucket-rate-limiter.replenishRate: 10
+                bucket-rate-limiter.burstCapacity: 10
+                bucket-rate-limiter.requestedTokens: 1
+      filter:
+        request-rate-limiter:
+          deny-empty-key: false
+
+logging:
+  level:
+    root: ERROR
+    org.springframework.cloud.gateway: TRACE
+    com.aslearn: DEBUG
